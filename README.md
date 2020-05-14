@@ -1,11 +1,11 @@
 
-# 숙소예약 시스템
+# 새벽배송 포장 시스템
 
 본 시스템은 MSA/DDD/Event Storming/EDA 를 포괄하는 분석/설계/구현/운영 전단계를 커버하도록 구성한 시스템입니다.
 
 # Table of contents
 
-- [숙소예약관리 시스템](#---)
+- [새벽배송 포장 시스템](#---)
   - [서비스 시나리오](#서비스-시나리오)
   - [체크포인트](#체크포인트)
   - [분석/설계](#분석설계)
@@ -25,14 +25,10 @@
 # 서비스 시나리오
 
 기능적 요구사항
-1. 고객이 숙소를 선택하여 예약한다.
-1. 예약이 발생하면 숙소관리시스템에서 관리자가 예약을 확정한다.
-1. 예약이 확정되면 결제시스템 결제가 완료된다.
-1. 예약이 불가하면 숙소관리시스템에서 예약을 반려한다.
-1. 고객이 예약을 취소할 수 있다.
-1. 예약이 취소되면 결제가 취소된다.
-1. 고객이 숙소 예약상태를 중간중간 조회한다.
-1. 관리자가 숙소 요청상태를 중간중간 조회한다.
+1. 고객이 제품을 선택하여 주문한다.
+1. 예약이 발생하면 관리자가 물건을 포장한다.
+1. 고객이 제품 주문 리스트를 중간중간 조회한다.
+1. 관리자가 제품 주문 리스트를 중간중간 조회한다.
 
 비기능적 요구사항
 1. 트랜잭션
@@ -105,68 +101,28 @@
 # 분석/설계
 
 ## Event Storming 결과
-* MSAEz 로 모델링한 이벤트스토밍 결과: http://msaez.io/#/storming/hDfo3RRSORR952Fat5IbrH6Xtj72/every/0603347a781868520a77b002b9917653/-M78OoQcR0OeilfQEd4e
+* MSAEz 로 모델링한 이벤트스토밍 결과: 
+http://msaez.io/#/storming/9NwJeqKeYsVetJe3ZvVoGUhbsUK2/mine/a88bfce2c91101b97a80b54772a4b9bd/-M7Fhwe8gIwBp57LBd_d
 
 
-### 이벤트 도출
-![es-01](https://user-images.githubusercontent.com/63624005/81627098-63b35d00-9438-11ea-9fcd-6908cd746957.jpeg)
+![image](https://user-images.githubusercontent.com/63624035/81891841-7c607600-95e4-11ea-89ba-0baa347e9cc7.png)
 
+     - 도메인 서열 분리
+      . Core Domain : 패킹주문
+      . Supporting Domain : 물건패킹
+      . General Domain : 물건 주문 List
 
-### 부적격 이벤트 탈락
-![es-02](https://user-images.githubusercontent.com/63624005/81627175-91000b00-9438-11ea-80cd-45cf02f9e909.jpg)
-
-    - 과정중 도출된 잘못된 도메인 이벤트들을 걸러내는 작업을 수행함
-      . :숙소 재고가능 확인됨", "숙소 재고불가능 확인됨" 제외 : UI 이벤트 (업무적인 의미의 이벤트 아님)
-
-
-### 액터, 커맨드, 폴리시 부착
-![es-03](https://user-images.githubusercontent.com/63624005/81627702-bb9e9380-9439-11ea-8748-a64ba9e2a677.jpeg)
-
-
-### 어그리게잇으로 묶기
-![es-04](https://user-images.githubusercontent.com/63624005/81630276-1fc45600-9440-11ea-82a9-1a9732a10b44.jpg)
-
-
-### 바운디드 컨텍스트로 묶기
-![es-05](https://user-images.githubusercontent.com/63624005/81630293-2ce14500-9440-11ea-9072-5126f89d21c8.jpg)
-
-![ee-05-1](https://user-images.githubusercontent.com/63624005/81630449-96f9ea00-9440-11ea-8631-678dc09c9dec.jpeg)
-
-    - 도메인 서열 분리
-      . Core Domain : 예약 
-      . Supporting Domain : 숙소관리
-      . General Domain : 결제
-
-
-### 폴리시의 이동과 컨텍스트 매핑
-![es-06](https://user-images.githubusercontent.com/63624005/81630868-a2014a00-9441-11ea-94a5-83f64c2f41b1.jpeg)
-
-
-### 1차 완성본에 대한 기능적/비기능적 요구사항을 커버하는지 검증
+### 기능적/비기능적 요구사항을 커버하는지 검증
 ![es-06-0](https://user-images.githubusercontent.com/63624005/81761831-f241e000-9505-11ea-9266-e2d396bab028.jpg)
 
 ![es-06-old](https://user-images.githubusercontent.com/63624005/81771800-ef9fb480-951e-11ea-856c-f0eca4414cdc.jpg)
 
-    - 고객이 숙소를 선택하여 예약한다. (ok)
-    - 예약이 발생하면 숙소관리시스템에서 관리자가 예약을 확정한다. (ok)
-    - 예약이 확정되면 결제시스템에서 결제가 완료된다. --> 결제 실패시?
-    - 예약이 불가하면 숙소관리시스템에서 예약을 반려한다. (ok)
-    
-    - 고객이 예약을 취소할 수 있다. (ok)
-    - 예약이 취소되면 결제가 취소된다. (ok)
-    - 고객이 숙소 예약상태를 중간중간 조회한다. (ok)
-    - 관리자가 숙소 요청상태를 중간중간 조회한다. (ok)
 
+ - 고객이 제품을 선택하여 주문한다. (ok)
+ - 예약이 발생하면 관리자가 물건을 포장한다. (ok)
+ - 고객이 제품 주문 리스트를 중간중간 조회한다. (ok)
+ - 관리자가 제품 주문 리스트를 중간중간 조회한다. (ok)
 
-### 수정 모형    
-    - 모든 요구사항을 커버함.
-
-![es-06-1](https://user-images.githubusercontent.com/63624005/81762482-aee87100-9507-11ea-8a6c-c58679dab0f1.jpg)
-    
-    
-    - 빠른 고객응답 보다는 서비스의 안정성을 더욱 중시하는 비즈니스적인 이유로 수정하였다. (Pub/Sub)
-    
-<img width="1102" alt="es-07" src="https://user-images.githubusercontent.com/63624005/81761227-5cf21c00-9504-11ea-9d43-2b6679d85b12.png">
 
 
 ### 비기능 요구사항에 대한 검증
@@ -184,13 +140,9 @@
 
 
 ## 헥사고날 아키텍처 다이어그램 도출
-- 1차
-![es-09](https://user-images.githubusercontent.com/63624005/81773899-56739c80-9524-11ea-97dc-cb1b968c2046.jpg)
 
-    - 빠른 고객응답 보다는 서비스의 안정성을 더욱 중시하는 비즈니스적인 이유로 수정하였다. (Pub/Sub)
+![image](https://user-images.githubusercontent.com/63624035/81892161-5687a100-95e5-11ea-9762-f0b53463fa13.png)
 
-- 최종
-![es-09-1](https://user-images.githubusercontent.com/63624005/81773921-5e334100-9524-11ea-855a-a72b69b77503.jpg)
 
 
 # 구현
@@ -198,15 +150,15 @@
 분석/설계 단계에서 도출된 헥사고날 아키텍처에 따라, 각 BC별로 대변되는 마이크로 서비스들을 스프링부트와 파이선으로 구현하였다. 구현한 각 서비스를 로컬에서 실행하는 방법은 아래와 같다. (각자의 포트넘버는 8081 ~ 808n 이다)
 
 ```
-# reservationservice //port number: 8081
+# packingorder//port number: 8081
 cd reservation
 mvn spring-boot:run
 
-# managementservice //port number: 8082
+# productpacking //port number: 8082
 cd management
 mvn spring-boot:run
 
-# paymentservice //port number: 8083
+# orderinfo//port number: 8083
 cd payment
 mvn spring-boot:run
 ```
@@ -217,60 +169,41 @@ mvn spring-boot:run
   이때 가능한 현업에서 사용하는 언어(유비쿼터스 랭귀지)를 그대로 사용하여 모델링시 영문화 하였다.
 
 ```
-package roomreservation;
+package productpacking2;
 
 import javax.persistence.*;
 import org.springframework.beans.BeanUtils;
 import java.util.List;
 
 @Entity
-@Table(name="Reservation_table")
-public class Reservation {
+@Table(name="PackingOrder_table")
+public class PackingOrder {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    private String userId;
-    private String reserveId;
-    private String status;
+    private String productInfo;
 
     @PostPersist
     public void onPostPersist(){
-        Reserved reserved = new Reserved();
-        BeanUtils.copyProperties(this, reserved);
-        reserved.publish();
-    }
-    @PostRemove
-    public void onPostRemove(){
-        ReservationCanceled reservationCanceled = new ReservationCanceled();
-        BeanUtils.copyProperties(this, reservationCanceled);
-        reservationCanceled.publish();
-
+        Packingordered packingordered = new Packingordered();
+        BeanUtils.copyProperties(this, packingordered);
+        packingordered.publishAfterCommit();
     }
 
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
-    public String getUserId() {
-        return userId;
+    public String getProductInfo() {
+        return productInfo;
     }
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-    public String getReserveId() {
-        return reserveId;
-    }
-    public void setReserveId(String reserveId) {
-        this.reserveId = reserveId;
-    }
-    public String getStatus() {
-        return status;
-    }
-    public void setStatus(String status) {
-        this.status = status;
+
+    public void setProductInfo(String productInfo) {
+        this.productInfo = productInfo;
     }
 
 }
@@ -279,11 +212,12 @@ public class Reservation {
 Entity Pattern과 Repository Pattern을 적용하여 JPA를 통하여 다양한 데이터소스 유형(RDB)에 대한 별도의 처리가 없도록, 데이터 접근 어댑터를 자동 생성하기 위하여 Spring Data REST의 RestRepository를 적용하였다.
 
 ```
-package roomreservation;
+package productpacking2;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface ReservationRepository extends PagingAndSortingRepository<Reservation, Long>{
+public interface PackingOrderRepository extends PagingAndSortingRepository<PackingOrder, Long>{
+
 ```
 
 
@@ -414,7 +348,7 @@ http localhost:8081/reservations
 
 *devops를 활용하여 pipeline을 구성하였고, CI CD 자동화를 구현하였다.
 
-![image](https://user-images.githubusercontent.com/63624035/81771610-71431280-951e-11ea-91e9-8498a62e636e.png)
+![image](https://user-images.githubusercontent.com/63624035/81893268-3c9b8d80-95e8-11ea-8614-5a55cb3138d3.png)
 
 * 아래와 같이 pod 가 정상적으로 올라간 것을 확인하였다.
 ![image](https://user-images.githubusercontent.com/63624035/81761872-156c8f80-9506-11ea-8c23-55f8d347a2c8.png)
