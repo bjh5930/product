@@ -331,15 +331,12 @@ http localhost:8081/reservations
 
 ![image](https://user-images.githubusercontent.com/63624035/81899679-59d75880-95f6-11ea-9405-dbbcef263556.png)
 
-- 워크로드를 동시사용자 10명으로 20초 동안 걸어준다.
-![시즈적용_10](https://user-images.githubusercontent.com/63624014/81764751-3edce980-950d-11ea-806e-d8f51a26c46d.PNG)
+- 워크로드를 동시사용자 2명으로 20초 동안 걸어준다.
+![image](https://user-images.githubusercontent.com/63624035/81900001-f863b980-95f6-11ea-9da8-0bf46044d682.png)
 
-- 오토스케일이 어떻게 되고 있는지 모니터링을 걸어둔다. 동시 사용자 10명으로 한 경우에는 시스템에 변화가 없다.
-![시즈적용_10_3](https://user-images.githubusercontent.com/63624014/81764796-574d0400-950d-11ea-88d4-56428f5be633.PNG)
 
-- siege 의 로그를 보명 10명까지는 성능에 문제가 없어보인다. 
-![시즈적용_10_2](https://user-images.githubusercontent.com/63624014/81764775-4c926f00-950d-11ea-93b8-ae86f7bb4cf5.PNG)
-
+- 오토스케일이 어떻게 되고 있는지 모니터링을 걸어둔다. 동시 사용자 2명으로 한 경우에는 시스템에 변화가 없다.
+![image](https://user-images.githubusercontent.com/63624035/81900177-4b3d7100-95f7-11ea-8634-18af8095a883.png)
 
 
 - 워크로드를 동시사용자 100명으로 20초 동안 걸어준다.
