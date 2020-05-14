@@ -217,43 +217,16 @@ public interface PackingOrderRepository extends PagingAndSortingRepository<Packi
 
 
 ## 적용 후 REST API 의 테스트
-- reservation 서비스에서 예약요청 
-```  
-  http localhost:8081/reservations reserveId=”reserve1” userId=”user1” status=”reserve”
-```   
+- packingorder 서비스에서 예약요청 
 
-![dv-01](https://user-images.githubusercontent.com/63624005/81763734-df7dda00-950a-11ea-9793-34abab44c077.png)
+![image](https://user-images.githubusercontent.com/63624035/81898746-475c1f80-95f4-11ea-99bb-ab9838614d0f.png)
 
-
-- management 서비스 확인
-
-![dv-02](https://user-images.githubusercontent.com/63624005/81763750-e9074200-950a-11ea-8d9a-f533be2ffbde.png)
-  
-
-- managementList 서비스에서 reserveId 저장 확인
-```  
-http localhost:8082/managementLists/1
-``` 
-
-![dv-03](https://user-images.githubusercontent.com/63624005/81763766-f15f7d00-950a-11ea-9ea3-d138ee246485.png)
+![image](https://user-images.githubusercontent.com/63624035/81898819-65c21b00-95f4-11ea-9719-2ff6f956b952.png)
 
 
-- management 서비스의 승인처리
-```  
-http localhost:8082/managements reserveId=”reserve1”
-``` 
+- productpacking 서비스 확인
 
-![dv-04](https://user-images.githubusercontent.com/63624005/81763782-f9b7b800-950a-11ea-94d2-b6c9d96e9c59.png)
-
-
-- payment 서비스 확인
-
-![dv-05](https://user-images.githubusercontent.com/63624005/81763795-03412000-950b-11ea-8597-a3c0713cd5fd.png)
-  
-
-- kafka 수신 확인
- 
-![dv-06](https://user-images.githubusercontent.com/63624005/81763810-0b995b00-950b-11ea-99fa-13e089a3060b.png)
+![image](https://user-images.githubusercontent.com/63624035/81898991-c8b3b200-95f4-11ea-9217-2bd5b2717eb8.png)
   
 
 
@@ -354,10 +327,10 @@ http localhost:8081/reservations
 ### 오토스케일 아웃
 시스템을 안정되게 운영할 수 있도록 보완책으로 자동화된 확장 기능을 적용하고자 한다. 
 
-- 안정성이 중요한 결제서비스에 대한 replica 를 동적으로 늘려주도록 HPA 를 설정한다. 설정은 CPU 사용량이 15프로를 넘어서면 replica 를 10개까지 늘려준다:
-```
-kubectl autoscale deploy payment --min=1 --max=10 --cpu-percent=15
-```
+- replica 를 동적으로 늘려주도록 HPA 를 설정한다. 설정은 CPU 사용량이 15프로를 넘어서면 replica 를 10개까지 늘려준다:
+
+![image](https://user-images.githubusercontent.com/63624035/81899679-59d75880-95f6-11ea-9405-dbbcef263556.png)
+
 - 워크로드를 동시사용자 10명으로 20초 동안 걸어준다.
 ![시즈적용_10](https://user-images.githubusercontent.com/63624014/81764751-3edce980-950d-11ea-806e-d8f51a26c46d.PNG)
 
