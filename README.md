@@ -112,11 +112,7 @@ http://msaez.io/#/storming/9NwJeqKeYsVetJe3ZvVoGUhbsUK2/mine/a88bfce2c91101b97a8
       . Supporting Domain : 물건패킹
       . General Domain : 물건 주문 List
 
-### 기능적/비기능적 요구사항을 커버하는지 검증
-![es-06-0](https://user-images.githubusercontent.com/63624005/81761831-f241e000-9505-11ea-9266-e2d396bab028.jpg)
-
-![es-06-old](https://user-images.githubusercontent.com/63624005/81771800-ef9fb480-951e-11ea-856c-f0eca4414cdc.jpg)
-
+### 기능적 요구사항을 커버하는지 검증
 
  - 고객이 제품을 선택하여 주문한다. (ok)
  - 예약이 발생하면 관리자가 물건을 포장한다. (ok)
@@ -124,19 +120,18 @@ http://msaez.io/#/storming/9NwJeqKeYsVetJe3ZvVoGUhbsUK2/mine/a88bfce2c91101b97a8
  - 관리자가 제품 주문 리스트를 중간중간 조회한다. (ok)
 
 
-
 ### 비기능 요구사항에 대한 검증
-![es-08](https://user-images.githubusercontent.com/63624005/81761245-68ddde00-9504-11ea-8a48-35891592d982.jpg)
+![image](https://user-images.githubusercontent.com/63624035/81894307-66ee4a80-95ea-11ea-8ecc-3e4eeb00ac8f.png)
+
 
     - 트랜잭션 (1)
-      . 고객이 예약한 건에 대하여 관리자가 예약가능 여부를 확인한 후에 결제를 진행한다.
-    - 장애격리 (2)
+      . 고객이 주문한 건에 대하여 관리자가 확인 후에 물건을 포장한다.
+    - 장애격리 (1)
       . 숙소관리 기능이 수행되지 않더라도 예약은 365일 24시간 받을 수 있어야 한다. 
         [Async (event-driven), Eventual Consistency]
-      . 결제시스템이 과중되면 관리자가 결제를 잠시후에 하도록 유도한다. 고객에게는 Pending상태로 보여준다. 
-    - 성능 (3)
-      . 고객이 숙소에 대한 최종 예약상태를 예약시스템(프론트엔드)에서 확인할 수 있어야 한다. [CQRS]
-      . 관리자가 숙소요청상태를 숙소관리시스템(프론트엔드)에서 확인할 수 있어야 한다. [CQRS]
+    - 성능 (2)
+      . 고객이 주문한 건에 대하여 UI(프론트엔드)에서 확인할 수 있어야 한다. [CQRS]
+      . 관리자가 고객 주문 요청건을 UI(프론트엔드)에서 확인할 수 있어야 한다. [CQRS]
 
 
 ## 헥사고날 아키텍처 다이어그램 도출
